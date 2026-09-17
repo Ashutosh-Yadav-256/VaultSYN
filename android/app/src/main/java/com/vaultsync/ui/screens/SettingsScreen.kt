@@ -70,7 +70,6 @@ fun SettingsScreen(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Security Section
         Text(
             text = "SECURITY & CRYPTOGRAPHY",
             fontSize = 11.sp,
@@ -128,7 +127,6 @@ fun SettingsScreen(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Sync Settings Section
         Text(
             text = "SYNCHRONIZATION",
             fontSize = 11.sp,
@@ -199,7 +197,6 @@ fun SettingsScreen(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Storage Analytics
         Text(
             text = "STORAGE CONSUMPTION",
             fontSize = 11.sp,

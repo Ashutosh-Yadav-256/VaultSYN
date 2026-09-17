@@ -126,7 +126,6 @@ fun DocumentListScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Search Bar
             OutlinedTextField(
                 value = searchQuery,
                 onValueChange = { viewModel.onSearchQueryChanged(it) },
@@ -154,7 +153,6 @@ fun DocumentListScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Filter Chips Row
             LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 item {
                     FilterChip(
@@ -248,7 +246,7 @@ fun DocumentItem(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()
         ) {
-            // Lock Icon Badge
+
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
@@ -266,7 +264,6 @@ fun DocumentItem(
 
             Spacer(modifier = Modifier.width(12.dp))
 
-            // File Information
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = document.name,
@@ -289,7 +286,6 @@ fun DocumentItem(
                 }
             }
 
-            // Delete Action
             IconButton(onClick = onDelete) {
                 Icon(
                     imageVector = Icons.Default.Delete,
@@ -305,7 +301,7 @@ fun DocumentItem(
 @Composable
 fun StatusBadge(status: SyncStatus) {
     val (text, tint, icon) = when (status) {
-        SyncStatus.SYNCED -> Triple("Verified ✓", VerifiedEmerald, Icons.Default.CheckCircle)
+        SyncStatus.SYNCED -> Triple("Verified ", VerifiedEmerald, Icons.Default.CheckCircle)
         SyncStatus.PENDING -> Triple("Pending", WarningAmber, Icons.Default.Sync)
         SyncStatus.SYNCING -> Triple("Syncing...", AccentCyan, Icons.Default.Sync)
         SyncStatus.CONFLICT -> Triple("Conflict", ErrorRose, Icons.Default.Warning)

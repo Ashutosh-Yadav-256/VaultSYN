@@ -23,18 +23,14 @@ public final class ImportDocumentUseCase: Sendable {
             throw AppError.storageError("Cannot import empty file: \(name)")
         }
 
-        // 1. Calculate SHA-256
         let sha256 = await cryptoService.calculateSha256(data: bytes)
 
-        // 2. Duplicate detection
         if let existing = try await documentRepository.findBySha256(sha256) {
             throw AppError.duplicateError("A document with identical content already exists: \(existing.name)")
         }
 
-        // 3. Encrypt payload
         let payload = try await cryptoService.encrypt(data: bytes, keyAlias: cryptoService.defaultKeyAlias)
 
-        // Pack IV length (1 byte) + IV + Ciphertext
         var combined = Data()
         var ivLength = UInt8(payload.iv.count)
         combined.append(&ivLength, count: 1)
@@ -44,7 +40,6 @@ public final class ImportDocumentUseCase: Sendable {
         let docId = UUID().uuidString
         let storagePath = "vault_\(docId).enc"
 
-        // 4. Write encrypted payload to disk
         _ = try await fileStorage.writeFile(at: storagePath, data: combined)
 
         let now = Date()
@@ -60,10 +55,8 @@ public final class ImportDocumentUseCase: Sendable {
             syncStatus = .pending
         )
 
-        // 5. Persist document
         try await documentRepository.saveDocument(document)
 
-        // 6. Record sync operation
         let syncOp = SyncOperation(
             id: UUID().uuidString,
             documentId: docId,

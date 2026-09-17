@@ -26,7 +26,6 @@ public final class KeychainHelper: KeyProvider, @unchecked Sendable {
             return keyData
         }
 
-        // Key doesn't exist, generate a fresh 256-bit symmetric key
         var keyBytes = [UInt8](repeating: 0, count: 32)
         let randomStatus = SecRandomCopyBytes(kSecRandomDefault, keyBytes.count, &keyBytes)
         guard randomStatus == errSecSuccess else {

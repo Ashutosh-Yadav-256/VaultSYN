@@ -4,7 +4,7 @@
 
 ---
 
-## 🏛 The Testing Pyramid
+## The Testing Pyramid
 
 ```text
                ▲
@@ -23,7 +23,7 @@
 
 ---
 
-## 🎯 Test Tier Definitions
+## Test Tier Definitions
 
 ### 1. Unit Tests (Execution Speed: < 100ms per test)
 - **Target**: Pure Domain Layer and Use Cases.

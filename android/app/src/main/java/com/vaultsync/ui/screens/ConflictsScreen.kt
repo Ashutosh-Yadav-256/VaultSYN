@@ -156,7 +156,6 @@ fun ConflictCard(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Versions comparison
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(10.dp)
@@ -198,7 +197,6 @@ fun ConflictCard(
 
             Spacer(modifier = Modifier.height(14.dp))
 
-            // Resolution Buttons
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)

@@ -27,19 +27,15 @@ class ImportDocumentUseCase(
             throw AppError.StorageError("Cannot import empty file: $name")
         }
 
-        // 1. Calculate SHA-256 checksum
         val sha256 = cryptoService.calculateSha256(bytes)
 
-        // 2. Check for duplicate by SHA-256
         val existing = documentRepository.findBySha256(sha256)
         if (existing != null) {
             throw AppError.DuplicateError("A document with identical content already exists: ${existing.name}")
         }
 
-        // 3. Encrypt payload with hardware key
         val encryptedPayload = cryptoService.encrypt(bytes)
 
-        // Package IV + ciphertext for atomic storage
         val combinedOutput = ByteArrayOutputStream()
         combinedOutput.write(encryptedPayload.iv.size)
         combinedOutput.write(encryptedPayload.iv)
@@ -49,7 +45,6 @@ class ImportDocumentUseCase(
         val docId = UUID.randomUUID().toString()
         val storagePath = "vault_$docId.enc"
 
-        // 4. Write encrypted payload to sandboxed storage
         fileStorage.writeFile(storagePath, encryptedBytes)
 
         val now = System.currentTimeMillis()
@@ -65,10 +60,8 @@ class ImportDocumentUseCase(
             syncStatus = SyncStatus.PENDING
         )
 
-        // 5. Persist document metadata
         documentRepository.saveDocument(document)
 
-        // 6. Record sync operation in durable queue
         val syncOp = SyncOperation(
             id = UUID.randomUUID().toString(),
             documentId = docId,

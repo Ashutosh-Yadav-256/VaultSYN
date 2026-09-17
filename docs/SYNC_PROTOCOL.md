@@ -4,7 +4,7 @@
 
 ---
 
-## 🔁 The 6-Phase Sync Pipeline
+## The 6-Phase Sync Pipeline
 
 The sync engine executes a deterministic 6-phase lifecycle:
 
@@ -36,7 +36,7 @@ The sync engine executes a deterministic 6-phase lifecycle:
 
 ---
 
-## ⚡ Conflict Resolution Matrix
+## Conflict Resolution Matrix
 
 When the same file path exists in both local storage and sync destination with divergent SHA-256 hashes:
 
@@ -48,7 +48,7 @@ When the same file path exists in both local storage and sync destination with d
 
 ---
 
-## 📈 Retry Policy & Exponential Backoff
+## Retry Policy & Exponential Backoff
 
 For transient failures (I/O timeouts, lock contention, network blips), operations undergo bounded exponential backoff:
 
@@ -65,7 +65,7 @@ $$\text{Delay}(n) = \min\left(\text{BaseDelay} \times 2^{n}, \text{MaxDelay}\rig
 
 ---
 
-## 💥 Crash Recovery State Machine
+## Crash Recovery State Machine
 
 The sync operations table acts as a write-ahead durable ledger:
 
@@ -94,7 +94,7 @@ The sync operations table acts as a write-ahead durable ledger:
 
 ---
 
-## ⚙ Bounded Concurrency Worker Pool
+## Bounded Concurrency Worker Pool
 
 To avoid saturating flash storage I/O bandwidth, draining device battery, and triggering memory pressure warnings on mobile hardware:
 

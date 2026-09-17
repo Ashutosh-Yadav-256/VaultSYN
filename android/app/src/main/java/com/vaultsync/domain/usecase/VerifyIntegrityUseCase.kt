@@ -31,7 +31,6 @@ class VerifyIntegrityUseCase(
             )
         }
 
-        // Unpack IV and Ciphertext
         val inputStream = ByteArrayInputStream(rawFileBytes)
         val ivLength = inputStream.read()
         if (ivLength <= 0 || ivLength > rawFileBytes.size) {
@@ -46,7 +45,6 @@ class VerifyIntegrityUseCase(
         inputStream.read(iv)
         val ciphertext = inputStream.readBytes()
 
-        // Decrypt and re-compute plaintext SHA-256
         val decryptedBytes = try {
             cryptoService.decrypt(EncryptedPayload(ciphertext = ciphertext, iv = iv))
         } catch (e: Exception) {

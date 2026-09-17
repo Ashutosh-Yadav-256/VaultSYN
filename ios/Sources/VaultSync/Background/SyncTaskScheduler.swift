@@ -24,7 +24,7 @@ public final class SyncTaskScheduler: @unchecked Sendable {
         let request = BGProcessingTaskRequest(identifier: Self.taskId)
         request.requiresNetworkConnectivity = false
         request.requiresExternalPower = false
-        request.earliestBeginDate = Date(timeIntervalSinceNow: 15 * 60) // 15 minutes
+        request.earliestBeginDate = Date(timeIntervalSinceNow: 15 * 60)
 
         do {
             try BGTaskScheduler.shared.submit(request)

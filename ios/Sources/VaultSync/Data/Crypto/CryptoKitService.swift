@@ -13,11 +13,10 @@ public final class CryptoKitService: CryptoService, @unchecked Sendable {
             let rawKey = try keyProvider.getOrCreateSymmetricKey(alias: keyAlias)
             let symmetricKey = SymmetricKey(data: rawKey)
 
-            // AES-GCM sealed box generates random nonce and 128-bit authentication tag
             let sealedBox = try AES.GCM.seal(data, using: symmetricKey)
 
             let nonceData = Data(sealedBox.nonce)
-            // Combine ciphertext and tag
+
             let combinedCiphertext = sealedBox.ciphertext + sealedBox.tag
 
             return EncryptedPayload(ciphertext: combinedCiphertext, iv: nonceData)
@@ -33,7 +32,6 @@ public final class CryptoKitService: CryptoService, @unchecked Sendable {
 
             let nonce = try AES.GCM.Nonce(data: payload.iv)
 
-            // Split ciphertext and 16-byte tag
             guard payload.ciphertext.count >= 16 else {
                 throw AppError.cryptoError("Ciphertext shorter than authentication tag")
             }

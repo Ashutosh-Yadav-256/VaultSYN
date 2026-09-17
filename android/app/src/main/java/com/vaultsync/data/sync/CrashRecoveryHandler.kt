@@ -23,7 +23,7 @@ class CrashRecoveryHandler(
                 try {
                     val fileBytes = fileStorage.readFile(doc.localPath)
                     if (fileBytes.isNotEmpty()) {
-                        // Mark document and op as PENDING to retry clean execution
+
                         syncRepository.updateOperationStatus(
                             id = op.id,
                             status = OperationStatus.PENDING,
@@ -51,7 +51,7 @@ class CrashRecoveryHandler(
                     recoveredCount++
                 }
             } else {
-                // Document or file disappeared during crash
+
                 syncRepository.updateOperationStatus(
                     id = op.id,
                     status = OperationStatus.FAILED,

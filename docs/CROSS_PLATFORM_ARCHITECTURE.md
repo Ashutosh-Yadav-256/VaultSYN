@@ -4,7 +4,7 @@
 
 ---
 
-## 🏛 The 10 Golden Architecture Rules
+## The 10 Golden Architecture Rules
 
 ### Rule 1: UI Must Never Access Persistence Directly
 Views (SwiftUI Views or Jetpack Compose Screens) must only observe state from their respective ViewModel. Direct access to Room, SwiftData, Core Data, SQLite, `UserDefaults`, `SharedPreferences`, or File I/O from presentation components is strictly forbidden.
@@ -38,7 +38,7 @@ Exceptions or unhandled panics are disallowed. System and I/O failures must map 
 
 ---
 
-## 🔄 Platform Conceptual Mapping
+## Platform Conceptual Mapping
 
 | Architectural Concept | Android Native (Kotlin) | iOS Native (Swift) |
 | :--- | :--- | :--- |
@@ -57,7 +57,7 @@ Exceptions or unhandled panics are disallowed. System and I/O failures must map 
 
 ---
 
-## 🧩 Interface Parity Specification
+## Interface Parity Specification
 
 Both platforms must mirror each other's domain contract signatures:
 

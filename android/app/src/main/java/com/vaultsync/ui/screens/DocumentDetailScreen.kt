@@ -72,7 +72,7 @@ fun DocumentDetailScreen(
             .background(Slate950)
             .padding(20.dp)
     ) {
-        // Navigation Header
+
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()
@@ -101,7 +101,6 @@ fun DocumentDetailScreen(
         } else {
             val doc = document!!
 
-            // File Details Card
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -135,7 +134,6 @@ fun DocumentDetailScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // SHA-256 Checksum Card
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -165,7 +163,6 @@ fun DocumentDetailScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Integrity Verification Card
             Box(
                 modifier = Modifier
                     .fillMaxWidth()

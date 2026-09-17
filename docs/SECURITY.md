@@ -4,7 +4,7 @@
 
 ---
 
-## 🛡 Cryptographic Primitives
+## Cryptographic Primitives
 
 | Component | Standard / Algorithm | Parameters |
 | :--- | :--- | :--- |
@@ -16,7 +16,7 @@
 
 ---
 
-## 🔒 Threat Model & Mitigations
+## Threat Model & Mitigations
 
 ### 1. Physical Device Theft / Forensic Disk Extraction
 * **Threat**: An adversary copies the flash memory or inspects unencrypted SQLite files directly.
@@ -39,7 +39,7 @@
 
 ---
 
-## 🔄 Encryption & Decryption Pipeline
+## Encryption & Decryption Pipeline
 
 ```text
 IMPORT FILE

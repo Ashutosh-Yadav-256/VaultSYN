@@ -53,7 +53,6 @@ class VaultSyncApplication : Application() {
     lateinit var syncController: SyncController
         private set
 
-    // Use cases
     lateinit var getDocumentsUseCase: GetDocumentsUseCase
         private set
     lateinit var importDocumentUseCase: ImportDocumentUseCase
@@ -106,7 +105,6 @@ class VaultSyncApplication : Application() {
         resolveConflictUseCase = ResolveConflictUseCase(syncRepository, documentRepository, fileStorage)
         getSyncStatusUseCase = GetSyncStatusUseCase(documentRepository, syncRepository, syncController)
 
-        // Crash recovery on cold start
         applicationScope.launch {
             val recoveryHandler = CrashRecoveryHandler(syncRepository, documentRepository, fileStorage, cryptoService)
             recoveryHandler.recover()

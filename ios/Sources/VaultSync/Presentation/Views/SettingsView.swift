@@ -20,7 +20,6 @@ public struct SettingsView: View {
                 }
                 .padding(.top, 10)
 
-                // Security Card
                 VStack(alignment: .leading, spacing: 14) {
                     Text("SECURITY & KEY MANAGEMENT")
                         .font(.system(size: 11, weight: .bold))
@@ -62,7 +61,6 @@ public struct SettingsView: View {
                 .cornerRadius(12)
                 .overlay(RoundedRectangle(cornerRadius: 12).stroke(VaultTheme.borderSubtle, lineWidth: 1))
 
-                // Sync Settings
                 VStack(alignment: .leading, spacing: 14) {
                     Text("SYNCHRONIZATION POLICY")
                         .font(.system(size: 11, weight: .bold))
@@ -106,7 +104,6 @@ public struct SettingsView: View {
                 .cornerRadius(12)
                 .overlay(RoundedRectangle(cornerRadius: 12).stroke(VaultTheme.borderSubtle, lineWidth: 1))
 
-                // Storage Card
                 VStack(alignment: .leading, spacing: 14) {
                     Text("STORAGE USAGE")
                         .font(.system(size: 11, weight: .bold))

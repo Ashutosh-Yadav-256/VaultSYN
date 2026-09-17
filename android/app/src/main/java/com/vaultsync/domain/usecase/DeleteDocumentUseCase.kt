@@ -17,15 +17,12 @@ class DeleteDocumentUseCase(
         val document = documentRepository.getDocument(documentId)
             ?: throw AppError.NotFoundError("Document with ID $documentId not found.")
 
-        // Delete encrypted file from disk
         if (fileStorage.fileExists(document.localPath)) {
             fileStorage.deleteFile(document.localPath)
         }
 
-        // Delete metadata record
         documentRepository.deleteDocument(documentId)
 
-        // Queue delete operation for sync
         val syncOp = SyncOperation(
             id = UUID.randomUUID().toString(),
             documentId = documentId,

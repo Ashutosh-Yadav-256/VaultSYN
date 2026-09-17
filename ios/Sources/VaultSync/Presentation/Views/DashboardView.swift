@@ -10,7 +10,7 @@ public struct DashboardView: View {
     public var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                // Header
+
                 HStack(spacing: 12) {
                     Image(systemName: "lock.icloud.fill")
                         .font(.system(size: 30))
@@ -26,7 +26,6 @@ public struct DashboardView: View {
                 }
                 .padding(.top, 10)
 
-                // 2x2 Metric Cards Grid
                 LazyVGrid(columns: [GridItem(.flexible(), spacing: 12), GridItem(.flexible(), spacing: 12)], spacing: 12) {
                     MetricCardView(
                         title: "Documents",
@@ -54,7 +53,6 @@ public struct DashboardView: View {
                     )
                 }
 
-                // Sync Now Button
                 Button(action: {
                     viewModel.syncNow()
                 }) {
@@ -78,7 +76,6 @@ public struct DashboardView: View {
                 }
                 .disabled(viewModel.summary.isSyncing)
 
-                // Hardware Security Architecture Card
                 VStack(alignment: .leading, spacing: 8) {
                     Text("HARDWARE-BACKED ENCRYPTION")
                         .font(.system(size: 11, weight: .bold))

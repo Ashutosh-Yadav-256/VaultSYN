@@ -89,7 +89,6 @@ public final class SyncEngine: SyncController, @unchecked Sendable {
             }
         }
 
-        // Phase 1: SCAN
         let pendingOps = try await syncRepository.getPendingOperations()
         var totalProcessed = pendingOps.count
         var successful = 0
@@ -112,7 +111,6 @@ public final class SyncEngine: SyncController, @unchecked Sendable {
             )
         }
 
-        // Bounded concurrency (up to 4 tasks)
         let maxConcurrent = 4
         var index = 0
 

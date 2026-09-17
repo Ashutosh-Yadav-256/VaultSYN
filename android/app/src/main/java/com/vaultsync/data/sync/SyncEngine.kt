@@ -56,12 +56,12 @@ class SyncEngine(
         var conflictsDetected = 0
 
         try {
-            // Phase 1: SCAN
+
             val pendingOps = syncRepository.getPendingOperations()
             totalProcessed = pendingOps.size
 
             if (pendingOps.isEmpty()) {
-                // Also scan for any documents stuck in PENDING status
+
                 val pendingDocs = documentRepository.getDocumentsByStatus(SyncStatus.PENDING)
                 for (doc in pendingDocs) {
                     documentRepository.updateSyncStatus(doc.id, SyncStatus.SYNCED)
@@ -76,7 +76,6 @@ class SyncEngine(
                 )
             }
 
-            // Phase 2, 3, 4, 5, 6: COMPARE, PLAN, EXECUTE, VERIFY, FINALIZE
             coroutineScope {
                 val jobs = pendingOps.map { op ->
                     async {
@@ -114,7 +113,7 @@ class SyncEngine(
             if (isPaused) return false
 
             try {
-                // Mark RUNNING in write-ahead ledger
+
                 syncRepository.updateOperationStatus(
                     id = op.id,
                     status = OperationStatus.RUNNING,
@@ -133,13 +132,12 @@ class SyncEngine(
 
                 documentRepository.updateSyncStatus(doc.id, SyncStatus.SYNCING)
 
-                // Execute transfer / verification
                 if (fileStorage.fileExists(doc.localPath)) {
                     val bytes = fileStorage.readFile(doc.localPath)
                     if (bytes.isNotEmpty()) {
-                        // VERIFY: ensure integrity
+
                         val verifiedHash = cryptoService.calculateSha256(bytes)
-                        // If file intact, mark FINALIZE
+
                         syncRepository.updateOperationStatus(
                             id = op.id,
                             status = OperationStatus.COMPLETED,
@@ -150,7 +148,6 @@ class SyncEngine(
                     }
                 }
 
-                // If file missing or empty
                 throw IllegalStateException("Local file missing or empty for document ${doc.id}")
 
             } catch (e: CancellationException) {
@@ -169,7 +166,6 @@ class SyncEngine(
             }
         }
 
-        // Exceeded retries: mark FAILED
         syncRepository.updateOperationStatus(
             id = op.id,
             status = OperationStatus.FAILED,

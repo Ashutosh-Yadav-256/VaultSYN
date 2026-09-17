@@ -14,7 +14,7 @@ public struct DocumentDetailView: View {
     public var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                // Back Button & Header
+
                 HStack(spacing: 12) {
                     Button(action: onBack) {
                         Image(systemName: "chevron.left")
@@ -27,7 +27,7 @@ public struct DocumentDetailView: View {
                 }
 
                 if let doc = viewModel.document {
-                    // Document Meta Card
+
                     VStack(alignment: .leading, spacing: 12) {
                         Text(doc.name)
                             .font(.system(size: 18, weight: .bold))
@@ -46,7 +46,6 @@ public struct DocumentDetailView: View {
                     .cornerRadius(12)
                     .overlay(RoundedRectangle(cornerRadius: 12).stroke(VaultTheme.borderSubtle, lineWidth: 1))
 
-                    // SHA-256 Digest Card
                     VStack(alignment: .leading, spacing: 8) {
                         Text("SHA-256 CHECKSUM")
                             .font(.system(size: 11, weight: .bold))
@@ -64,7 +63,6 @@ public struct DocumentDetailView: View {
                     .cornerRadius(12)
                     .overlay(RoundedRectangle(cornerRadius: 12).stroke(VaultTheme.borderSubtle, lineWidth: 1))
 
-                    // Integrity Verification Card
                     VStack(alignment: .leading, spacing: 14) {
                         HStack {
                             Text("INTEGRITY VERIFICATION")

@@ -24,11 +24,11 @@ class ResolveConflictUseCase(
 
         when (resolution) {
             ConflictResolution.KEEP_LOCAL -> {
-                // Local version is retained; mark document synced
+
                 documentRepository.updateSyncStatus(document.id, SyncStatus.SYNCED)
             }
             ConflictResolution.KEEP_REMOTE -> {
-                // Remote version accepted; update document hash to remote
+
                 val updatedDoc = document.copy(
                     sha256 = conflict.remoteHash,
                     modifiedAt = conflict.remoteModifiedAt,
@@ -37,15 +37,13 @@ class ResolveConflictUseCase(
                 documentRepository.saveDocument(updatedDoc)
             }
             ConflictResolution.KEEP_BOTH -> {
-                // Keep local version
+
                 documentRepository.updateSyncStatus(document.id, SyncStatus.SYNCED)
 
-                // Clone remote copy as a separate document
                 val remoteDocId = UUID.randomUUID().toString()
                 val remoteFilename = "${document.name.substringBeforeLast(".")}_remote_${conflict.remoteModifiedAt}.${document.name.substringAfterLast(".", "")}"
                 val remoteStoragePath = "vault_$remoteDocId.enc"
 
-                // Copy file storage if exists
                 if (fileStorage.fileExists(document.localPath)) {
                     fileStorage.copyFile(document.localPath, remoteStoragePath)
                 }

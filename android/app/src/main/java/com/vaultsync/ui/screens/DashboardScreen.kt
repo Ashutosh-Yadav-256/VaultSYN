@@ -59,7 +59,7 @@ fun DashboardScreen(
             .background(Slate950)
             .padding(20.dp)
     ) {
-        // App Header
+
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()
@@ -87,7 +87,6 @@ fun DashboardScreen(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Status Metrics Grid (2x2)
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -132,7 +131,6 @@ fun DashboardScreen(
 
         Spacer(modifier = Modifier.height(28.dp))
 
-        // Sync Action Button
         Button(
             onClick = { viewModel.syncNow() },
             enabled = !summary.isSyncing,
@@ -162,7 +160,6 @@ fun DashboardScreen(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Architecture Banner
         Box(
             modifier = Modifier
                 .fillMaxWidth()

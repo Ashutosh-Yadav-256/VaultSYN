@@ -9,7 +9,7 @@
 
 ---
 
-## 🎯 Architecture Philosophy
+## Architecture Philosophy
 
 ```text
 One product, two native implementations, one common architecture contract.
@@ -56,7 +56,7 @@ Instead of relying on a shared runtime or hybrid cross-platform framework (e.g. 
 
 ---
 
-## 🚀 Key Features
+## Key Features
 
 1. **Zero-Plaintext Storage (Hardware-Backed Encryption)**
    - All documents in the vault are encrypted at rest using **AES-256-GCM** with authenticated metadata.
@@ -78,7 +78,7 @@ Instead of relying on a shared runtime or hybrid cross-platform framework (e.g. 
 
 ---
 
-## 📊 Platform Parity Matrix
+## Platform Parity Matrix
 
 | Architectural Capability | iOS Native (`ios/`) | Android Native (`android/`) |
 | :--- | :--- | :--- |
@@ -96,7 +96,7 @@ Instead of relying on a shared runtime or hybrid cross-platform framework (e.g. 
 
 ---
 
-## 🏛 Clean Architecture Layers
+## Clean Architecture Layers
 
 Dependency Rule: **Outer layers depend on inner layers; the Domain layer depends on nothing.**
 
@@ -125,7 +125,7 @@ Data Layer (Room/SwiftData, Keystore/Keychain, File Storage, Sync Engine)
 
 ---
 
-## 📂 Repository Structure
+## Repository Structure
 
 ```text
 VaultSync/
@@ -164,7 +164,7 @@ VaultSync/
 
 ---
 
-## 🛠 Building and Running
+## Building and Running
 
 ### Android
 ```bash
@@ -185,7 +185,7 @@ swift test
 
 ---
 
-## 🎤 Interview Defense Highlights
+## Interview Defense Highlights
 
 When discussing VaultSync in technical interviews:
 
@@ -198,6 +198,6 @@ When discussing VaultSync in technical interviews:
 
 ---
 
-## 📜 License
+## License
 
 VaultSync is open source under the [MIT License](LICENSE).

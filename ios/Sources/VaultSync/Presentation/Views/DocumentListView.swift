@@ -11,7 +11,7 @@ public struct DocumentListView: View {
 
     public var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            // Header & Count
+
             VStack(alignment: .leading, spacing: 4) {
                 Text("Documents")
                     .font(.system(size: 28, weight: .bold))
@@ -23,7 +23,6 @@ public struct DocumentListView: View {
             .padding(.horizontal, 20)
             .padding(.top, 10)
 
-            // Search Bar
             HStack {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(VaultTheme.slate400)
@@ -45,7 +44,6 @@ public struct DocumentListView: View {
             .overlay(RoundedRectangle(cornerRadius: 10).stroke(VaultTheme.borderSubtle, lineWidth: 1))
             .padding(.horizontal, 20)
 
-            // Filter Chips
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 8) {
                     FilterChipView(
@@ -64,7 +62,6 @@ public struct DocumentListView: View {
                 .padding(.horizontal, 20)
             }
 
-            // Documents List
             if viewModel.documents.isEmpty {
                 VStack(spacing: 12) {
                     Spacer()
@@ -192,7 +189,7 @@ struct StatusBadgeView: View {
 
     private var statusText: String {
         switch status {
-        case .synced: return "Verified ✓"
+        case .synced: return "Verified "
         case .pending: return "Pending"
         case .syncing: return "Syncing..."
         case .conflict: return "Conflict"

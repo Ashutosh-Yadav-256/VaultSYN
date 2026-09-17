@@ -35,7 +35,7 @@ class LocalFileStorage(
                 targetFile.delete()
             }
             if (!tempFile.renameTo(targetFile)) {
-                // Fallback copy if rename fails
+
                 tempFile.copyTo(targetFile, overwrite = true)
                 tempFile.delete()
             }

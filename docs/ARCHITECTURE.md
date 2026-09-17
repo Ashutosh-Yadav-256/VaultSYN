@@ -4,7 +4,7 @@
 
 ---
 
-## 🏗 High-Level Architectural Flow
+## High-Level Architectural Flow
 
 ```text
        ┌─────────────────────────────────────────────────────────┐
@@ -58,7 +58,7 @@
 
 ---
 
-## 📦 Layer Descriptions & Boundaries
+## Layer Descriptions & Boundaries
 
 ### 1. Presentation Layer (UI & ViewModels)
 - **Role**: Present domain state to the user and accept touch/navigation inputs.
@@ -87,7 +87,7 @@
 
 ---
 
-## 🧵 Concurrency & Thread Boundaries
+## Concurrency & Thread Boundaries
 
 | Boundary | Android Implementation | iOS Implementation |
 | :--- | :--- | :--- |
