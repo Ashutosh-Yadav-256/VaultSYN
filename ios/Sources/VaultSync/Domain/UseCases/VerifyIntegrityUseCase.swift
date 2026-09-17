@@ -24,7 +24,7 @@ public final class VerifyIntegrityUseCase: Sendable {
             throw AppError.storageError("File does not exist at: \(document.localPath)")
         }
 
-        let rawBytes = try await fileStorage.readFile(at: document.localPath)
+        let rawBytes = Data(try await fileStorage.readFile(at: document.localPath))
         guard rawBytes.count > 1 else {
             return IntegrityResult(
                 documentId: documentId,
@@ -34,8 +34,8 @@ public final class VerifyIntegrityUseCase: Sendable {
             )
         }
 
-        let ivLength = Int(rawBytes[0])
-        guard rawBytes.count > 1 + ivLength else {
+        let ivLength = Int(rawBytes[rawBytes.startIndex])
+        guard rawBytes.count >= 1 + ivLength + 16 else {
             return IntegrityResult(
                 documentId: documentId,
                 isValid: false,
@@ -44,8 +44,10 @@ public final class VerifyIntegrityUseCase: Sendable {
             )
         }
 
-        let iv = rawBytes.subdata(in: 1..<(1 + ivLength))
-        let ciphertext = rawBytes.subdata(in: (1 + ivLength)..<rawBytes.count)
+        let ivStart = rawBytes.startIndex + 1
+        let ivEnd = ivStart + ivLength
+        let iv = Data(rawBytes[ivStart..<ivEnd])
+        let ciphertext = Data(rawBytes[ivEnd..<rawBytes.endIndex])
 
         do {
             let decrypted = try await cryptoService.decrypt(

@@ -10,7 +10,7 @@ public actor LocalDocumentStore {
         let id = UUID()
         return AsyncStream { continuation in
             Task {
-                await self.addContinuation(id: id, continuation: continuation)
+                self.addContinuation(id: id, continuation: continuation)
             }
             continuation.onTermination = { [weak self] _ in
                 guard let self else { return }

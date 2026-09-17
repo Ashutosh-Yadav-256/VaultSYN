@@ -13,7 +13,7 @@ public actor LocalSyncStore {
         let id = UUID()
         return AsyncStream { continuation in
             Task {
-                await self.addOpContinuation(id: id, continuation: continuation)
+                self.addOpContinuation(id: id, continuation: continuation)
             }
             continuation.onTermination = { [weak self] _ in
                 guard let self else { return }
@@ -37,7 +37,7 @@ public actor LocalSyncStore {
         let id = UUID()
         return AsyncStream { continuation in
             Task {
-                await self.addConflictContinuation(id: id, continuation: continuation)
+                self.addConflictContinuation(id: id, continuation: continuation)
             }
             continuation.onTermination = { [weak self] _ in
                 guard let self else { return }

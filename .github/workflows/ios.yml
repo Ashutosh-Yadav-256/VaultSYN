@@ -29,7 +29,7 @@ jobs:
       - name: Run Swift Package Tests
         run: |
           cd ios
-          swift test --parallel --enable-code-coverage
+          swift test --parallel --enable-code-coverage || (echo "Test failed, diagnostic reports:" && ls -la ~/Library/Logs/DiagnosticReports/ 2>/dev/null && for f in ~/Library/Logs/DiagnosticReports/*; do echo "=== $f ==="; cat "$f" 2>/dev/null; done; exit 1)
 
       - name: Upload Test Results
         if: always()

@@ -1,5 +1,6 @@
 import Foundation
 import Security
+import CryptoKit
 
 public protocol KeyProvider: Sendable {
     func getOrCreateSymmetricKey(alias: String) throws -> Data
@@ -24,13 +25,8 @@ public final class KeychainHelper: KeyProvider, @unchecked Sendable {
             return keyData
         }
 
-        var keyBytes = [UInt8](repeating: 0, count: 32)
-        let randomStatus = SecRandomCopyBytes(kSecRandomDefault, keyBytes.count, &keyBytes)
-        guard randomStatus == errSecSuccess else {
-            throw AppError.cryptoError("Failed to generate secure random key bytes")
-        }
-
-        let newKeyData = Data(keyBytes)
+        let newKey = SymmetricKey(size: .bits256)
+        let newKeyData = newKey.withUnsafeBytes { Data($0) }
 
         let addQuery: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
@@ -63,12 +59,8 @@ public final class InMemoryKeyProvider: KeyProvider, @unchecked Sendable {
             return existing
         }
 
-        var keyBytes = [UInt8](repeating: 0, count: 32)
-        let status = SecRandomCopyBytes(kSecRandomDefault, keyBytes.count, &keyBytes)
-        guard status == errSecSuccess else {
-            throw AppError.cryptoError("Random key generation failed")
-        }
-        let data = Data(keyBytes)
+        let key = SymmetricKey(size: .bits256)
+        let data = key.withUnsafeBytes { Data($0) }
         keys[alias] = data
         return data
     }

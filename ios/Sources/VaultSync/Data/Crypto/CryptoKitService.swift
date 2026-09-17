@@ -30,17 +30,12 @@ public final class CryptoKitService: CryptoService, @unchecked Sendable {
             let rawKey = try keyProvider.getOrCreateSymmetricKey(alias: keyAlias)
             let symmetricKey = SymmetricKey(data: rawKey)
 
-            let nonce = try AES.GCM.Nonce(data: payload.iv)
-
-            guard payload.ciphertext.count >= 16 else {
-                throw AppError.cryptoError("Ciphertext shorter than authentication tag")
+            guard payload.iv.count == 12, payload.ciphertext.count >= 16 else {
+                throw AppError.cryptoError("Invalid payload dimensions for AES-GCM")
             }
 
-            let tagIndex = payload.ciphertext.count - 16
-            let ciphertextOnly = payload.ciphertext.subdata(in: 0..<tagIndex)
-            let tagOnly = payload.ciphertext.subdata(in: tagIndex..<payload.ciphertext.count)
-
-            let sealedBox = try AES.GCM.SealedBox(nonce: nonce, ciphertext: ciphertextOnly, tag: tagOnly)
+            let combined = payload.iv + payload.ciphertext
+            let sealedBox = try AES.GCM.SealedBox(combined: combined)
             let decryptedData = try AES.GCM.open(sealedBox, using: symmetricKey)
 
             return decryptedData

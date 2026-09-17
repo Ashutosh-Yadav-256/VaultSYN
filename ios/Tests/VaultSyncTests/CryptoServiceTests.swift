@@ -3,7 +3,7 @@ import XCTest
 
 final class CryptoServiceTests: XCTestCase {
 
-    private var cryptoService: CryptoKitService!
+    private var cryptoService = CryptoKitService(keyProvider: InMemoryKeyProvider())
 
     override func setUp() {
         super.setUp()
@@ -24,9 +24,10 @@ final class CryptoServiceTests: XCTestCase {
         let plain = "Tamper check payload".data(using: .utf8)!
         let payload = try await cryptoService.encrypt(data: plain, keyAlias: "test_key")
 
-        var tamperedCiphertext = payload.ciphertext
-        let lastByte = tamperedCiphertext[tamperedCiphertext.count - 1]
-        tamperedCiphertext[tamperedCiphertext.count - 1] = lastByte ^ 0xFF
+        var tamperedCiphertext = Data(payload.ciphertext)
+        if let lastIndex = tamperedCiphertext.indices.last {
+            tamperedCiphertext[lastIndex] ^= 0xFF
+        }
 
         let tamperedPayload = EncryptedPayload(ciphertext: tamperedCiphertext, iv: payload.iv)
 

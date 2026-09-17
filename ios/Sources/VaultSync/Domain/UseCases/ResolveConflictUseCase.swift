@@ -30,15 +30,14 @@ public final class ResolveConflictUseCase: Sendable {
             try await documentRepository.updateSyncStatus(id: document.id, status: .synced)
 
         case .keepRemote:
-            var updatedDoc = document
             let newDoc = Document(
-                id: updatedDoc.id,
-                name: updatedDoc.name,
-                size: updatedDoc.size,
-                mimeType: updatedDoc.mimeType,
-                localPath: updatedDoc.localPath,
+                id: document.id,
+                name: document.name,
+                size: document.size,
+                mimeType: document.mimeType,
+                localPath: document.localPath,
                 sha256: conflict.remoteHash,
-                createdAt: updatedDoc.createdAt,
+                createdAt: document.createdAt,
                 modifiedAt: conflict.remoteModifiedAt,
                 syncStatus: .synced
             )
