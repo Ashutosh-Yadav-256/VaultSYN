@@ -1,10 +1,10 @@
 # VaultSync
 
-[![Android CI](https://github.com/vaultsync/vaultsync/actions/workflows/android.yml/badge.svg)](.github/workflows/android.yml)
-[![iOS CI](https://github.com/vaultsync/vaultsync/actions/workflows/ios.yml/badge.svg)](.github/workflows/ios.yml)
-[![Release](https://github.com/vaultsync/vaultsync/actions/workflows/release.yml/badge.svg)](.github/workflows/release.yml)
+[![Android CI](https://github.com/Ashutosh-Yadav-256/VaultSYN/actions/workflows/android.yml/badge.svg)](https://github.com/Ashutosh-Yadav-256/VaultSYN/actions/workflows/android.yml)
+[![iOS CI](https://github.com/Ashutosh-Yadav-256/VaultSYN/actions/workflows/ios.yml/badge.svg)](https://github.com/Ashutosh-Yadav-256/VaultSYN/actions/workflows/ios.yml)
+[![Release](https://github.com/Ashutosh-Yadav-256/VaultSYN/actions/workflows/release.yml/badge.svg)](https://github.com/Ashutosh-Yadav-256/VaultSYN/actions/workflows/release.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Platform: iOS & Android Native](https://img.shields.io/badge/Platform-iOS%20%7C%20Android%20Native-brightgreen.svg)]()
+[![Platform: iOS & Android Native](https://img.shields.io/badge/Platform-iOS%20%7C%20Android%20Native-brightgreen.svg)](https://github.com/Ashutosh-Yadav-256/VaultSYN)
 
 > **A secure, offline-first cross-platform document manager that synchronizes and verifies files while maintaining consistent Clean Architecture and engineering standards across native iOS and Android implementations.**
 
