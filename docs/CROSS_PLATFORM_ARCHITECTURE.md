@@ -63,8 +63,8 @@ Both platforms must mirror each other's domain contract signatures:
 
 ### Document Repository Contract
 
+#### Android (Kotlin)
 ```kotlin
-// Android (Kotlin)
 interface DocumentRepository {
     fun observeDocuments(): Flow<List<Document>>
     suspend fun getDocuments(): List<Document>
@@ -75,8 +75,8 @@ interface DocumentRepository {
 }
 ```
 
+#### iOS (Swift)
 ```swift
-// iOS (Swift)
 protocol DocumentRepository {
     func observeDocuments() -> AsyncStream<[Document]>
     func getDocuments() async throws -> [Document]
@@ -89,8 +89,8 @@ protocol DocumentRepository {
 
 ### Crypto Service Contract
 
+#### Android (Kotlin)
 ```kotlin
-// Android (Kotlin)
 interface CryptoService {
     suspend fun encrypt(data: ByteArray, keyAlias: String): EncryptedPayload
     suspend fun decrypt(payload: EncryptedPayload, keyAlias: String): ByteArray
@@ -98,8 +98,8 @@ interface CryptoService {
 }
 ```
 
+#### iOS (Swift)
 ```swift
-// iOS (Swift)
 protocol CryptoService {
     func encrypt(data: Data, keyAlias: String) async throws -> EncryptedPayload
     func decrypt(payload: EncryptedPayload, keyAlias: String) async throws -> Data
@@ -109,8 +109,8 @@ protocol CryptoService {
 
 ### File Storage Contract
 
+#### Android (Kotlin)
 ```kotlin
-// Android (Kotlin)
 interface FileStorage {
     suspend fun readFile(path: String): ByteArray
     suspend fun writeFile(path: String, data: ByteArray): String
@@ -120,8 +120,8 @@ interface FileStorage {
 }
 ```
 
+#### iOS (Swift)
 ```swift
-// iOS (Swift)
 protocol FileStorage {
     func readFile(at path: String) async throws -> Data
     func writeFile(at path: String, data: Data) async throws -> String
