@@ -13,11 +13,11 @@ final class ConflictDetectorTests: XCTestCase {
     func testDetectConflictReturnsNilWhenHashesMatch() {
         let doc = Document(
             id: "doc-1",
-            name = "report.pdf",
+            name: "report.pdf",
             size: 1024,
-            mimeType = "application/pdf",
-            localPath = "vault_doc-1.enc",
-            sha256 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            mimeType: "application/pdf",
+            localPath: "vault_doc-1.enc",
+            sha256: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             createdAt: Date(timeIntervalSince1970: 1000),
             modifiedAt: Date(timeIntervalSince1970: 2000)
         )
@@ -34,11 +34,11 @@ final class ConflictDetectorTests: XCTestCase {
     func testDetectConflictReturnsConflictWhenHashesDiverge() {
         let doc = Document(
             id: "doc-1",
-            name = "report.pdf",
+            name: "report.pdf",
             size: 1024,
-            mimeType = "application/pdf",
-            localPath = "vault_doc-1.enc",
-            sha256 = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            mimeType: "application/pdf",
+            localPath: "vault_doc-1.enc",
+            sha256: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             createdAt: Date(timeIntervalSince1970: 1000),
             modifiedAt: Date(timeIntervalSince1970: 2000)
         )

@@ -58,12 +58,12 @@ public final class ResolveConflictUseCase: Sendable {
             }
 
             let remoteDoc = Document(
-                id = remoteDocId,
-                name = remoteFilename,
-                size = document.size,
-                mimeType = document.mimeType,
-                localPath = remoteStoragePath,
-                sha256 = conflict.remoteHash,
+                id: remoteDocId,
+                name: remoteFilename,
+                size: document.size,
+                mimeType: document.mimeType,
+                localPath: remoteStoragePath,
+                sha256: conflict.remoteHash,
                 createdAt: conflict.remoteModifiedAt,
                 modifiedAt: conflict.remoteModifiedAt,
                 syncStatus: .synced

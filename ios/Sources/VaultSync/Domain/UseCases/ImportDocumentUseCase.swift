@@ -44,15 +44,15 @@ public final class ImportDocumentUseCase: Sendable {
 
         let now = Date()
         let document = Document(
-            id = docId,
-            name = name,
-            size = Int64(bytes.count),
-            mimeType = mimeType,
-            localPath = storagePath,
-            sha256 = sha256,
-            createdAt = now,
-            modifiedAt = now,
-            syncStatus = .pending
+            id: docId,
+            name: name,
+            size: Int64(bytes.count),
+            mimeType: mimeType,
+            localPath: storagePath,
+            sha256: sha256,
+            createdAt: now,
+            modifiedAt: now,
+            syncStatus: .pending
         )
 
         try await documentRepository.saveDocument(document)
