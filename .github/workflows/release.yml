@@ -1,0 +1,127 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g. v1.0.0)'
+        required: true
+        default: 'v1.0.0'
+
+jobs:
+  build-android-release:
+    name: Build Android Release APK
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Grant Execute Permissions for Gradlew
+        run: chmod +x android/gradlew
+
+      - name: Run Unit Tests
+        run: |
+          cd android
+          ./gradlew testDebugUnitTest
+
+      - name: Assemble Release APK
+        run: |
+          cd android
+          ./gradlew assembleRelease
+
+      - name: Prepare Android Asset
+        run: |
+          mkdir -p release-assets
+          cp android/app/build/outputs/apk/release/*.apk release-assets/VaultSync-Android.apk
+
+      - name: Upload Android Release Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-release-apk
+          path: release-assets/VaultSync-Android.apk
+
+  build-ios-release:
+    name: Build iOS Package
+    runs-on: macos-14
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Select Xcode Version
+        run: sudo xcode-select -s /Applications/Xcode_15.4.app/Contents/Developer
+
+      - name: Run Swift Tests
+        run: |
+          cd ios
+          swift test
+
+      - name: Package iOS Distribution
+        run: |
+          mkdir -p release-assets
+          cd ios
+          zip -r ../release-assets/VaultSync-iOS-Package.zip Sources Package.swift ../LICENSE ../README.md
+
+      - name: Upload iOS Release Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-release-package
+          path: release-assets/VaultSync-iOS-Package.zip
+
+  publish-github-release:
+    name: Publish GitHub Release
+    needs: [build-android-release, build-ios-release]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Download Android Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: android-release-apk
+          path: release-dist
+
+      - name: Download iOS Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ios-release-package
+          path: release-dist
+
+      - name: Generate Checksums
+        run: |
+          cd release-dist
+          sha256sum VaultSync-Android.apk VaultSync-iOS-Package.zip > checksums.txt
+
+      - name: Determine Tag Name
+        id: tag_name
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "tag=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+          else
+            echo "tag=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.tag_name.outputs.tag }}
+          name: VaultSync ${{ steps.tag_name.outputs.tag }}
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+          files: |
+            release-dist/VaultSync-Android.apk
+            release-dist/VaultSync-iOS-Package.zip
+            release-dist/checksums.txt
