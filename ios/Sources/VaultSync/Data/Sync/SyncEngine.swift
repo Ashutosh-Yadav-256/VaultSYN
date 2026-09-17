@@ -90,7 +90,7 @@ public final class SyncEngine: SyncController, @unchecked Sendable {
         }
 
         let pendingOps = try await syncRepository.getPendingOperations()
-        var totalProcessed = pendingOps.count
+        let totalProcessed = pendingOps.count
         var successful = 0
         var failed = 0
         let conflictsDetected = 0

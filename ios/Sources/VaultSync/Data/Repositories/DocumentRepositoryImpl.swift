@@ -8,14 +8,15 @@ public actor LocalDocumentStore {
 
     public func observe() -> AsyncStream<[Document]> {
         let id = UUID()
-        return AsyncStream { [weak self] continuation in
-            continuation.onTermination = { _ in
-                Task { [weak self] in
-                    await self?.removeContinuation(id: id)
-                }
+        return AsyncStream { continuation in
+            Task {
+                await self.addContinuation(id: id, continuation: continuation)
             }
-            Task { [weak self] in
-                await self?.addContinuation(id: id, continuation: continuation)
+            continuation.onTermination = { [weak self] _ in
+                guard let self else { return }
+                Task {
+                    await self.removeContinuation(id: id)
+                }
             }
         }
     }

@@ -11,14 +11,15 @@ public actor LocalSyncStore {
 
     public func observePendingOps() -> AsyncStream<[SyncOperation]> {
         let id = UUID()
-        return AsyncStream { [weak self] continuation in
-            continuation.onTermination = { _ in
-                Task { [weak self] in
-                    await self?.removeOpContinuation(id: id)
-                }
+        return AsyncStream { continuation in
+            Task {
+                await self.addOpContinuation(id: id, continuation: continuation)
             }
-            Task { [weak self] in
-                await self?.addOpContinuation(id: id, continuation: continuation)
+            continuation.onTermination = { [weak self] _ in
+                guard let self else { return }
+                Task {
+                    await self.removeOpContinuation(id: id)
+                }
             }
         }
     }
@@ -34,14 +35,15 @@ public actor LocalSyncStore {
 
     public func observeConflicts() -> AsyncStream<[Conflict]> {
         let id = UUID()
-        return AsyncStream { [weak self] continuation in
-            continuation.onTermination = { _ in
-                Task { [weak self] in
-                    await self?.removeConflictContinuation(id: id)
-                }
+        return AsyncStream { continuation in
+            Task {
+                await self.addConflictContinuation(id: id, continuation: continuation)
             }
-            Task { [weak self] in
-                await self?.addConflictContinuation(id: id, continuation: continuation)
+            continuation.onTermination = { [weak self] _ in
+                guard let self else { return }
+                Task {
+                    await self.removeConflictContinuation(id: id)
+                }
             }
         }
     }

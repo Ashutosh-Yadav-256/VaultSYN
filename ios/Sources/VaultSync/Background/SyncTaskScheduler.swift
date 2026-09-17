@@ -1,5 +1,7 @@
 import Foundation
+#if os(iOS)
 import BackgroundTasks
+#endif
 
 public final class SyncTaskScheduler: @unchecked Sendable {
     public static let shared = SyncTaskScheduler()
@@ -14,13 +16,16 @@ public final class SyncTaskScheduler: @unchecked Sendable {
     }
 
     public func registerBackgroundTask() {
+        #if os(iOS)
         BGTaskScheduler.shared.register(forTaskWithIdentifier: Self.taskId, using: nil) { task in
             guard let task = task as? BGProcessingTask else { return }
             self.handleBackgroundTask(task: task)
         }
+        #endif
     }
 
     public func scheduleNextSync() {
+        #if os(iOS)
         let request = BGProcessingTaskRequest(identifier: Self.taskId)
         request.requiresNetworkConnectivity = false
         request.requiresExternalPower = false
@@ -31,8 +36,10 @@ public final class SyncTaskScheduler: @unchecked Sendable {
         } catch {
             print("Could not schedule background sync: \(error)")
         }
+        #endif
     }
 
+    #if os(iOS)
     private func handleBackgroundTask(task: BGProcessingTask) {
         scheduleNextSync()
 
@@ -53,4 +60,5 @@ public final class SyncTaskScheduler: @unchecked Sendable {
             workTask.cancel()
         }
     }
+    #endif
 }

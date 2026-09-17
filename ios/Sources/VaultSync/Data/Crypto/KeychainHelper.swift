@@ -9,8 +9,6 @@ public final class KeychainHelper: KeyProvider, @unchecked Sendable {
     public init() {}
 
     public func getOrCreateSymmetricKey(alias: String) throws -> Data {
-        let tag = alias.data(using: .utf8)!
-
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: alias,
